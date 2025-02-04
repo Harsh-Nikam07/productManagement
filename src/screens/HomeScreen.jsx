@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList, Button } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';  // Changed this
+import { StyleSheet, View, Text, FlatList, Button, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
 
 const HomeScreen = ({ navigation, route }) => {
   const [products, setProducts] = useState([]);
@@ -18,7 +18,31 @@ const HomeScreen = ({ navigation, route }) => {
       products,
       setProducts,
     });
+
+
+
   };
+  const handleItemDelete = (itemToDelete) => {
+    Alert.alert(
+      "Delete Item",
+      "Are you sure you want to delete this item",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Delete",
+          onPress : () => {
+            const updatedProducts = products.filter( item => item.id !== itemToDelete.id );
+            setProducts(updatedProducts)
+          },
+          style: 'destructive',
+        }
+      ]
+
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -36,12 +60,20 @@ const HomeScreen = ({ navigation, route }) => {
             <Text style={styles.cell}>{item.productName}</Text>
             <Text style={styles.cell}>{item.qty}</Text>
             <View style={styles.cell}>
+              <View style={styles.cellActions}>
               <Icon 
                 name="pencil" 
                 size={20} 
                 color="#000"
                 onPress={() => handleUpdateItem(item)}
               />
+              <Icon 
+                name="delete" 
+                size={20} 
+                color="#000"
+                onPress={() => handleItemDelete(item)}
+              />
+              </View>
             </View>
           </View>
         )}
@@ -73,8 +105,17 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
     justifyContent: 'center',
-    alignItems: 'center',  // Added this
+    alignItems: 'center',  
     borderRightColor: 'black',
+  },
+  cellActions:{
+    flex: 1,
+   
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',  
+    gap:20,
+    flexDirection: 'row'
   },
   header: {
     fontWeight: 'bold',

@@ -1,26 +1,37 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert } from 'react-native';
+import { v4 as uuidv4 } from 'uuid';
+import 'react-native-get-random-values'; 
 
 const AddItem = ({ navigation, route }) => {
   const [productName, setProductName] = useState('');
   const [productQty, setProductQty] = useState('');
-  const [productId, setProductId] = useState('');
 
   // Ensure route.params is defined and provide default values
   const { products = [], setProducts } = route.params || {};
 
   const handleAddProduct = () => {
-    if (!productName || !productQty || !productId) {
+    if (!productName || !productQty) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
 
-    const newProduct = { id: productId, productName, qty: productQty };
+
+    const generateId = () => {
+      return Math.floor(Math.random() * 800000)
+    }
+
+ 
+    const newProduct = { 
+      id: generateId(),
+      productName,
+      qty: productQty 
+    };
+    
     const updatedProducts = [...products, newProduct];
     setProducts(updatedProducts);
     setProductName('');
     setProductQty('');
-    setProductId(''); 
     navigation.goBack(); 
   };
 
@@ -38,13 +49,6 @@ const AddItem = ({ navigation, route }) => {
         value={productQty}
         keyboardType="numeric"
         onChangeText={setProductQty}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Product ID"
-        value={productId}
-        keyboardType="numeric"
-        onChangeText={setProductId}
       />
       <Button title="Add Product" onPress={handleAddProduct} />
     </View>

@@ -4,13 +4,13 @@ import { StyleSheet, View , TextInput, Button } from 'react-native';
 const UpdateItem = ({navigation, route}) => {
 
     const { item, products, setProducts} = route.params;
-    const [productId, setProductId] = useState('');
+   
     const [productName, setProductName] = useState('');
     const [productQty, setProductQty] = useState('');
 
     useEffect(() => {
         if (item) {
-            setProductId(item.id.toString());
+            
             setProductName(item.productName);
             setProductQty(item.qty.toString());
         }
@@ -41,14 +41,7 @@ const UpdateItem = ({navigation, route}) => {
           onChangeText={setProductQty}
         />
   
-        <TextInput
-          style={styles.inputDisabled}
-          placeholder="Enter Product ID"
-          value={productId}
-          keyboardType='numeric'   
-          onChangeText={setProductId}
-          editable={false}
-        />
+
   
         <Button title="Update" style={styles.button} onPress={handleUpdate} />
   
