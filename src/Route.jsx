@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './screens/HomeScreen';
 import AddItem from './screens/AddItem';
 import UpdateItem from './screens/UpdateItem';
+import ItemDetails from './screens/ItemDetails';
 
 
 const Drawer = createDrawerNavigator();
@@ -15,6 +16,7 @@ const Route = () => {
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="addItem" component={AddItem} />
         <Drawer.Screen name="UpdateItem" component={UpdateItem} options={{drawerItemStyle: { display: 'none' }}} />
+        <Drawer.Screen name="Item Details" component={ItemDetails} options={{drawerItemStyle: { display: 'none' }}} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

@@ -19,8 +19,6 @@ const HomeScreen = ({ navigation, route }) => {
       setProducts,
     });
 
-
-
   };
   const handleItemDelete = (itemToDelete) => {
     Alert.alert(
@@ -44,6 +42,17 @@ const HomeScreen = ({ navigation, route }) => {
     )
   }
 
+  const viewItem = (item) => {
+
+    console.log("item pressed", item)
+    navigation.navigate('Item Details', {
+      item,
+      products,
+      setProducts,
+    });
+
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
@@ -61,6 +70,12 @@ const HomeScreen = ({ navigation, route }) => {
             <Text style={styles.cell}>{item.qty}</Text>
             <View style={styles.cell}>
               <View style={styles.cellActions}>
+              <Icon
+                name='eye'
+                size={20}
+                color="#000"
+                onPress={() => viewItem(item)}
+              />
               <Icon 
                 name="pencil" 
                 size={20} 
@@ -73,6 +88,7 @@ const HomeScreen = ({ navigation, route }) => {
                 color="#000"
                 onPress={() => handleItemDelete(item)}
               />
+
               </View>
             </View>
           </View>
@@ -80,6 +96,7 @@ const HomeScreen = ({ navigation, route }) => {
       />
       <Button
         title="Add Item"
+        style
         onPress={() => navigation.navigate('addItem', { products, setProducts })}
       />
     </View>
